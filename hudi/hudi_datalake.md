@@ -1,8 +1,6 @@
 ip
 ```
-172.31.9.218
-172.31.13.93
-172.31.3.71
+172.31.43.238
 ```
 1. 启动mysql 以及 maxwell [在另外一个项目]
 ```
@@ -20,7 +18,7 @@ bash run_flink_session.sh
 
 3. 启动flink sql
 ```
-/usr/lib/flink/bin/sql-client.sh -s application_1648273923565_0008
+/usr/lib/flink/bin/sql-client.sh -s application_1648290404228_0006
 
 # result-mode
 set sql-client.execution.result-mode=tableau;
@@ -88,7 +86,6 @@ DATE_FORMAT(CURRENT_TIMESTAMP, 'yyyy-MM-dd') as logday, DATE_FORMAT(CURRENT_TIME
 使用flink sql 测试,使用hive
 select sum(good_count) from flink_hudi_order_ods;
 
-使用hive
 ```
 8. 使用spark sql 查询
 ```
@@ -109,10 +106,14 @@ wget 172.31.43.238:5016/spark-scala-examples-1.0-SNAPSHOT.jar
 spark-submit \
     --deploy-mode cluster \
     --master yarn \
-    --class com.tingxin.app.Dwd \
+    --class com.tingxin.app.CheckDws \
     --jars ./hudi-spark3.1.2-bundle_2.12-0.10.1.jar,spark-avro_2.12-3.1.2.jar \
     --conf 'spark.serializer=org.apache.spark.serializer.KryoSerializer' \
     --conf 'spark.dynamicAllocation.enabled=false' \
     ./spark-scala-examples-1.0-SNAPSHOT.jar
 
+```
+airflow
+```
+extra='{"key_file": "/usr/local/airflow/.ssh/id_rsa", "no_host_key_check": true}'
 ```
