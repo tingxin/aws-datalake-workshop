@@ -1,4 +1,3 @@
-from itsdangerous import json
 from kafka import KafkaProducer
 from time import sleep
 from mock import gen, DataType
@@ -15,7 +14,7 @@ behaviour_schema = {
 }
 
 creator = gen(columns=behaviour_schema, increment_id="resource_id",
-              interval_min=100, interval_max=1000)
+              interval_min=100, interval_max=300)
 
 
 def send_success(self, *args, **kwargs):

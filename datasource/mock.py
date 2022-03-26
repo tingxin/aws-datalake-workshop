@@ -26,8 +26,6 @@ def _get_data(columns_dict):
         column_data_option = columns_dict[column]
         column_data_type = column_data_option[0]
 
-        if column == 'city':
-            print(column_data_option)
         if column_data_type == DataType.Enum:
             column_data_items = column_data_option[1]
             item[column] = fake.random_choices(
