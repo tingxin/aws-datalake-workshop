@@ -5,6 +5,13 @@ ip
 172.31.3.71
 ```
 1. 启动mysql 以及 maxwell [在另外一个项目]
+```
+mysql -h demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn -P 3306 -u admin -p
+
+docker run -it --rm zendesk/maxwell bin/maxwell --user=admin \
+    --password=Demo1234 --host=demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn --producer=kafka \
+    --kafka.bootstrap.servers=b-1.demo-cluster-1.9z77lu.c4.kafka.cn-northwest-1.amazonaws.com.cn:9092 --kafka_topic=maxwell
+```
 
 2. run flink session
 ```
@@ -13,7 +20,7 @@ bash run_flink_session.sh
 
 3. 启动flink sql
 ```
-/usr/lib/flink/bin/sql-client.sh -s application_1648215713226_0013
+/usr/lib/flink/bin/sql-client.sh -s application_1648273923565_0008
 
 # result-mode
 set sql-client.execution.result-mode=tableau;
@@ -76,9 +83,16 @@ WITH (
 insert into flink_hudi_order_ods select * ,CURRENT_TIMESTAMP as ts,
 DATE_FORMAT(CURRENT_TIMESTAMP, 'yyyy-MM-dd') as logday, DATE_FORMAT(CURRENT_TIMESTAMP, 'hh') as hh from kafka_order;
 ```
-7. 使用spark sql 查询
+7. 验证测试. 
 ```
-sudo wget http://maven.aliyun.com/nexus/content/groups/public/org/apache/hudi/hudi-spark3.1.2-bundle_2.12/0.10.1/ .
+使用flink sql 测试,使用hive
+select sum(good_count) from flink_hudi_order_ods;
+
+使用hive
+```
+8. 使用spark sql 查询
+```
+sudo wget http://maven.aliyun.com/nexus/content/groups/public/org/apache/hudi/hudi-spark3.1.2-bundle_2.12/0.10.1/hudi-spark3.1.2-bundle_2.12-0.10.1.jar .
 sudo wget http://maven.aliyun.com/nexus/content/groups/public/org/apache/spark/spark-avro_2.12/3.1.2/spark-avro_2.12-3.1.2.jar .
 
 spark-shell \
@@ -91,11 +105,12 @@ spark.sql("select sum(good_count) from flink_hudi_order_ods").show()
 
 8. 手动提交复杂spark jar任务
 ```
+wget 172.31.43.238:5016/spark-scala-examples-1.0-SNAPSHOT.jar
 spark-submit \
     --deploy-mode cluster \
     --master yarn \
     --class com.tingxin.app.Dwd \
-    --jars ./spark-avro_2.12-3.1.2.jar \
+    --jars ./hudi-spark3.1.2-bundle_2.12-0.10.1.jar,spark-avro_2.12-3.1.2.jar \
     --conf 'spark.serializer=org.apache.spark.serializer.KryoSerializer' \
     --conf 'spark.dynamicAllocation.enabled=false' \
     ./spark-scala-examples-1.0-SNAPSHOT.jar
