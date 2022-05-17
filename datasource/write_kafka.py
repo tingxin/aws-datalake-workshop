@@ -5,6 +5,9 @@ import json
 import sys
 from setting import BootStrap_Servers
 
+SASL_USERNAME = "admin"
+SASL_PASSWORD = "admin_Demo1234"
+
 behaviour_schema = {
     "user_mail": (DataType.Enum, ('barry.xu@163.com', 'dandan@qq.com', 'pony@qq.com', 'focus@qq.com', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest', 'guest')),
     "event_type": (DataType.Enum, ('click', 'page_enter', 'page_leave')),
@@ -14,7 +17,7 @@ behaviour_schema = {
 }
 
 creator = gen(columns=behaviour_schema, increment_id="resource_id",
-              interval_min=100, interval_max=300)
+              interval_min=500, interval_max=900)
 
 
 def send_success(self, *args, **kwargs):
@@ -30,7 +33,12 @@ def send_error(self, *args, **kwargs):
 
 
 def start_producer(topic):
-    producer = KafkaProducer(bootstrap_servers=BootStrap_Servers)
+    producer = KafkaProducer(
+        security_protocol="SASL_SSL",
+        sasl_mechanism="SCRAM-SHA-512",
+        sasl_plain_username=SASL_USERNAME,
+        sasl_plain_password=SASL_PASSWORD,
+        bootstrap_servers=BootStrap_Servers)
     for item in creator:
         doc = json.dumps(item).encode('utf-8')
         producer.send(topic, doc).add_callback(

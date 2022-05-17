@@ -11,14 +11,20 @@ docker run -it --rm zendesk/maxwell bin/maxwell --user=admin \
     --kafka.bootstrap.servers=b-1.demo-cluster-1.9z77lu.c4.kafka.cn-northwest-1.amazonaws.com.cn:9092 --kafka_topic=maxwell
 ```
 
+hudi 相关jar包
+```
+https://repo.maven.apache.org/maven2/org/apache/hudi/
+```
+
 2. run flink session
 ```
+
 bash run_flink_session.sh
 ```
 
 3. 启动flink sql
 ```
-/usr/lib/flink/bin/sql-client.sh -s application_1648290404228_0006
+/usr/lib/flink/bin/sql-client.sh -s application_1648290404228_0021
 
 # result-mode
 set sql-client.execution.result-mode=tableau;
@@ -44,6 +50,18 @@ CREATE TABLE kafka_order (
  'properties.group.id' = 'testGroup1',
  'format' = 'maxwell-json'
 );
+
+CREATE TABLE kafka_order_dws (
+  amount DECIMAL(10, 2)
+) WITH (
+ 'connector' = 'kafka',
+ 'topic' = 'order_dws_test',
+ 'properties.bootstrap.servers' = 'b-1.demo-cluster-1.9z77lu.c4.kafka.cn-northwest-1.amazonaws.com.cn:9092',
+ 'properties.group.id' = 'testGroup1',
+ 'format' = 'maxwell-json'
+);
+
+insert into kafka_order_dws select SUM(amount) from kafka_order;
 ```
 5. 同步到hudi以及hive (glue)
 ```
@@ -92,10 +110,7 @@ select sum(good_count) from flink_hudi_order_ods;
 sudo wget http://maven.aliyun.com/nexus/content/groups/public/org/apache/hudi/hudi-spark3.1.2-bundle_2.12/0.10.1/hudi-spark3.1.2-bundle_2.12-0.10.1.jar .
 sudo wget http://maven.aliyun.com/nexus/content/groups/public/org/apache/spark/spark-avro_2.12/3.1.2/spark-avro_2.12-3.1.2.jar .
 
-spark-shell \
---jars ./hudi-spark3.1.2-bundle_2.12-0.10.1.jar,spark-avro_2.12-3.1.2.jar \
---conf 'spark.serializer=org.apache.spark.serializer.KryoSerializer'
---conf 'spark.dynamicAllocation.enabled=false'
+spark-shell --jars ./hudi-spark3.1.2-bundle_2.12-0.10.1.jar,spark-avro_2.12-3.1.2.jar --conf 'spark.serializer=org.apache.spark.serializer.KryoSerializer' --conf 'spark.dynamicAllocation.enabled=false'
 
 spark.sql("select sum(good_count) from flink_hudi_order_ods").show()
 ```
@@ -106,14 +121,20 @@ wget 172.31.43.238:5016/spark-scala-examples-1.0-SNAPSHOT.jar
 spark-submit \
     --deploy-mode cluster \
     --master yarn \
-    --class com.tingxin.app.CheckDws \
+    --class com.tingxin.app.Dwd \
     --jars ./hudi-spark3.1.2-bundle_2.12-0.10.1.jar,spark-avro_2.12-3.1.2.jar \
     --conf 'spark.serializer=org.apache.spark.serializer.KryoSerializer' \
     --conf 'spark.dynamicAllocation.enabled=false' \
     ./spark-scala-examples-1.0-SNAPSHOT.jar
 
 ```
-airflow
+
+9. 使用prosto 查询数据
+
+10. 使用superset 制作报表
 ```
-extra='{"key_file": "/usr/local/airflow/.ssh/id_rsa", "no_host_key_check": true}'
+superset run -h 0.0.0.0 -p 5029 --with-threads
+数据库配置 athena链接
+awsathena+rest://@athena.cn-northwest-1.amazonaws.com.cn/default?s3_staging_dir=<s3地址>
 ```
+

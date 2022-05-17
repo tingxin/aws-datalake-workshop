@@ -31,3 +31,13 @@ def fetch_one(sql: str):
         conn.commit()
         t = cursor.fetchone()
         return t
+
+
+def fetch(sql: str):
+    conn = get_conn()
+
+    with conn.cursor() as cursor:
+        cursor.execute(sql)
+        conn.commit()
+        t = cursor.fetch_all()
+        return t

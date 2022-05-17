@@ -1,11 +1,14 @@
 from kafka import KafkaConsumer
-from setting import BootStrap_Servers
+from setting import BootStrap_Servers2
 import time
 import sys
 
+SASL_USERNAME = "admin"
+SASL_PASSWORD = "admin_Demo1234"
+
 
 def start_consumer(topic):
-    consumer = KafkaConsumer(topic, bootstrap_servers=BootStrap_Servers)
+    consumer = KafkaConsumer(topic, bootstrap_servers=BootStrap_Servers2)
     print("Begin...")
     for msg in consumer:
         print(msg)

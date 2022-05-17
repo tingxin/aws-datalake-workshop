@@ -1,6 +1,7 @@
 from faker import Faker
 from random import random
 import time
+from pymysql import TIMESTAMP
 from pysqler import Insert
 from datetime import datetime, timedelta
 
@@ -14,8 +15,10 @@ class DataType:
     DOUBLE = 'double'
     EMAIL = 'email'
     STR = 'str'
+    TEXT = 'text'
     CITY = 'city'
     DATETIME = 'datetime'
+    TIMESTAMP = 'timestamp'
     DATE = 'date'
 
 
@@ -36,8 +39,21 @@ def _get_data(columns_dict):
             item[column] = fake.pystr()
             continue
 
+        if column_data_type == DataType.TEXT:
+            text_l = column_data_option[1]
+            u = fake.texts(nb_texts=text_l,
+                           max_nb_chars=500,
+                           ext_word_list=None)
+            item[column] = " ".join(u)
+            continue
+
         if column_data_type == DataType.EMAIL:
             item[column] = fake.company_email()
+            continue
+
+        if column_data_type == DataType.TIMESTAMP:
+            timestamp = int(datetime.now().timestamp()*1000)
+            item[column] = timestamp
             continue
 
         if column_data_type == DataType.CITY:
