@@ -53,15 +53,6 @@ spark-submit \
 ssh_hook = SSHHook(ssh_conn_id='ssh_default')
 
 
-dwd_command = command_format.format("Dwd")
-dwd_job = SSHOperator(
-    task_id='spark_hudi_order_dwd',
-    ssh_hook=ssh_hook,
-    ssh_conn_id='ssh_default',
-    command=dwd_command,
-    dag=dag
-)
-
 dws_command = command_format.format("Dws")
 dws_job = SSHOperator(
     task_id='spark_hudi_order_dws',
@@ -80,12 +71,6 @@ dws_check_job = SSHOperator(
     dag=dag
 )
 
-ods_order = DummyOperator(task_id="flink_hudi_order_ods", dag=dag)
-
-user_dim = DummyOperator(task_id="user_dim", dag=dag)
-
 end = DummyOperator(task_id="end", dag=dag)
 
-start >> ods_order >> dwd_job
-start >> user_dim >> dwd_job
-dwd_job >> dws_job >> dws_check_job >> end
+start >> dws_job >> dws_check_job >> end

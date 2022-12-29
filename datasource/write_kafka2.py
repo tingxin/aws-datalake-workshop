@@ -31,7 +31,8 @@ def send_error(self, *args, **kwargs):
 
 
 def start_producer(topic):
-    producer = KafkaProducer(bootstrap_servers=BootStrap_Servers)
+    producer = KafkaProducer(security_protocol="SSL",
+                             bootstrap_servers=BootStrap_Servers)
     for item in creator:
         doc = json.dumps(item).encode('utf-8')
         producer.send(topic, doc).add_callback(

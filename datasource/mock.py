@@ -1,7 +1,6 @@
 from faker import Faker
 from random import random
 import time
-from pymysql import TIMESTAMP
 from pysqler import Insert
 from datetime import datetime, timedelta
 
@@ -115,3 +114,18 @@ def gen(columns: dict, interval_min=1000, interval_max=3000, increment_id=''):
         yield item
         interval = fake.random_int(min=interval_min, max=interval_max) * 0.001
         time.sleep(interval)
+
+
+def genn(columns: dict):
+    """
+    间隔随机毫秒数生成模拟订单数据
+    :param columns: 数据包含的字段机器数据类型
+    :param interval_min: 最小毫秒数
+    :param interval_max: 最大毫秒数
+    :return:
+    """
+
+    while True:
+        # item["user_mail"] = fake.safe_email()
+        item = _get_data(columns)
+        yield item

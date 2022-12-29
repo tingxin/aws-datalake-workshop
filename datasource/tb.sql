@@ -49,7 +49,23 @@ ORDER BY o.create_time DESC
 LIMIT 10;
 
 
-
+CREATE TABLE `simple_event` (
+    id BIGINT NOT NULL,
+     name STRING,
+     description STRING,
+     weight DECIMAL(10,3),
+    PRIMARY KEY (`id`) NOT ENFORCED
+) WITH (
+    'connector' = 'mysql-cdc',      -- 可选 'mysql-cdc' 和 'postgres-cdc'
+    'hostname' = 'demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn',  
+                                    -- 数据库的 IP
+    'port' = '3306',                -- 数据库的访问端口
+    'username' = 'admin',        -- 数据库访问的用户名（需要提供 SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT, SELECT, RELOAD 权限）
+    'password' = 'Demo1234',    -- 数据库访问的密码
+    'database-name' = 'demo',   -- 需要同步的数据库
+    'table-name' = 'simple2'      -- 需要同步的数据表名
+);
  update `order` set user_mail = "barry.xu@163.com" where order_id =8594;
+ update `order` set user_mail = "pony@qq.com" where order_id =8594;
 
  INSERT INTO `order` ( user_mail,goods_id,status,good_count,amount,create_time,update_time ) VALUES( 'pony@qq.com',5,'unpaid',1,505.0,'2022-05-17 11:15:34','2022-05-17 11:15:34' )

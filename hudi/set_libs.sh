@@ -1,7 +1,7 @@
 target=/usr/lib/flink/lib/
 # 下载hudi flink bundle jar, 这个是我针对EMR6.4.0编译好的，用这个就可以
 wget https://dxs9dnjebzm6y.cloudfront.net/tmp/hudi-flink-bundle_2.12-0.10.1.jar
-mv hudi-flink-bundle_2.12-0.10.1.jar /usr/lib/flink/lib/
+mv hudi-flink-bundle_2.12-0.10.1.jar  ${target}
 # kafka connector
 wget https://repo1.maven.org/maven2/org/apache/flink/flink-connector-kafka_2.12/1.13.1/flink-connector-kafka_2.12-1.13.1.jar
 mv flink-connector-kafka_2.12-1.13.1.jar  ${target}
@@ -9,6 +9,14 @@ mv flink-connector-kafka_2.12-1.13.1.jar  ${target}
 # mysql cdc connector
 wget https://repo1.maven.org/maven2/com/ververica/flink-sql-connector-mysql-cdc/2.2.1/flink-sql-connector-mysql-cdc-2.2.1.jar
 mv flink-sql-connector-mysql-cdc-2.2.1.jar  ${target}
+
+#starrocks connector
+wget https://repo1.maven.org/maven2/com/starrocks/flink-connector-starrocks/1.2.3_flink-1.13_2.12/flink-connector-starrocks-1.2.3_flink-1.13_2.12.jar
+mv flink-sql-connector-mysql-cdc-2.2.1.jar  ${target}
+
+# mongo cdc connector
+wget https://repo1.maven.org/maven2/com/ververica/flink-sql-connector-mongodb-cdc/2.1.1/flink-sql-connector-mongodb-cdc-2.1.1.jar
+mv flink-sql-connector-mongodb-cdc-2.1.1.jar  ${target}
 
 # mysql jdbc connector
 wget https://repo.maven.apache.org/maven2/org/apache/flink/flink-connector-jdbc_2.11/1.13.1/flink-connector-jdbc_2.11-1.13.1.jar

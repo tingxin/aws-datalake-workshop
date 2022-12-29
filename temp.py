@@ -1,3 +1,7 @@
-t = ("Enum", ('barry.xu@163.com', 'dandan@qq.com', 'pony@qq.com', 'focus@qq.com'))
-print(t[0])
-print(t[1])
+from datetime import datetime
+import os
+
+u = ["a", "b"]
+for item, index in u:
+    print(item)
+    print(index)

@@ -20,7 +20,7 @@ order_schema = {
 }
 
 creator = gen(columns=order_schema,
-              interval_min=1000, interval_max=5000)
+              interval_min=1000, interval_max=3000)
 
 for item in creator:
     print(item)

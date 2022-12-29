@@ -77,7 +77,7 @@ docker run -ti --rm zendesk/maxwell bin/maxwell --user=admin --password=Demo1234
 
 
 
-sudo docker run -it --rm --name maxwell -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_KEY=$AWS_SECRET_ACCESS_KEY -v `cd && pwd`/.aws:/root/.aws zendesk/maxwell sh -c 'cp /app/kinesis-producer-library.properties.example /app/kinesis-producer-library.properties && echo "Region=cn-northwest-1" >> /app/kinesis-producer-library.properties && bin/maxwell --user=admin --password=Demo1234 --host=demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn --producer=kinesis --kinesis_stream=order_ds'
+sudo docker run -it --rm --name maxwell -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_KEY=$AWS_SECRET_ACCESS_KEY -v `cd && pwd`/.aws:/root/.aws zendesk/maxwell sh -c 'cp /app/kinesis-producer-library.properties.example /app/kinesis-producer-library.properties && echo "Region=cn-northwest-1" >> /app/kinesis-producer-library.properties && bin/maxwell --user=admin --password=Demo1234 --host=demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn --producer=kinesis --kinesis_stream=order_raw_ds'
 
 
 docker run -it --rm zendesk/maxwell bin/maxwell --user=admin \
