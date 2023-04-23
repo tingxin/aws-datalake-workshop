@@ -1,7 +1,4 @@
-from datetime import datetime
-import os
-
-u = ["a", "b"]
-for item, index in u:
-    print(item)
-    print(index)
+import json
+payload= "{\"id\":1,\"name\":\"test\",\"description\":\"check\",\"weight\":100.2}"
+data = json.loads(payload)
+print(data)

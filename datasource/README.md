@@ -2,12 +2,16 @@
 4. 创建数据表
 ```
 mysql -h demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn -P 3306 -u admin -p
+mysql -h pro.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn -P 3306 -u demo -p
+mysql -h demo.cqshokmqgqfv.ap-northeast-1.rds.amazonaws.com -P 3306 -u admin -p
+
+
 
 create database demo;
 
 use demo;
 
-CREATE TABLE IF NOT EXISTS `order` (
+CREATE TABLE IF NOT EXISTS `uorder` (
     order_id INT AUTO_INCREMENT NOT NULL,
     user_mail varchar(20) NOT NULL,
     status char(10) NOT NULL, 

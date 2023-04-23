@@ -38,7 +38,6 @@ dag = DAG(
 
 start = DummyOperator(task_id="start", dag=dag)
 
-
 command_format = f"""
 spark-submit \
     --deploy-mode cluster \

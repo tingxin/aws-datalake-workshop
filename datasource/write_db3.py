@@ -14,17 +14,18 @@ order_schema = {
     "status": (DataType.Enum, ('unpaid', 'paid', 'cancel', 'shipping', 'finished')),
     "good_count": (DataType.INT, (1, 10)),
     "amount": (DataType.DOUBLE, (10, 1000)),
+    "city": (DataType.CITY,),
     "create_time": (DataType.DATETIME,),
     "update_time": (DataType.DATETIME,)
 }
 
 creator = gen(columns=order_schema,
-              interval_min=20, interval_max=50)
+              interval_min=1000, interval_max=2000)
 
 for item in creator:
     print(item)
     try:
-        command = Insert("`{0}`".format("mall_order"))
+        command = Insert("`{0}`".format("uorder"))
         for key in item:
             command.put(key, item[key])
 
