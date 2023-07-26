@@ -13,6 +13,7 @@ region = 'ap-northeast-1'
 service = 'es'
 current_time = datetime.now().strftime('%Y-%m-%d-%H')
 index_name = f'bie-hours-{current_time}'
+index_name = "user_demo"
 url = f"https://search-bie-demo-sxc42bjy3ywvd5s3omc3w2udny.ap-northeast-1.es.amazonaws.com/{index_name}/_doc/"
 credentials = boto3.Session().get_credentials()
 print(credentials.access_key)
