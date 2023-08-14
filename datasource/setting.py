@@ -8,7 +8,5 @@ Focus_TB = 'order'
 
 # kafka
 BootStrap_Servers = [
-    'b-2.demo-kafka.5b6prd.c4.kafka.cn-northwest-1.amazonaws.com.cn:9092',
-    'b-3.demo-kafka.5b6prd.c4.kafka.cn-northwest-1.amazonaws.com.cn:9092',
-    'b-1.demo-kafka.5b6prd.c4.kafka.cn-northwest-1.amazonaws.com.cn:9092'
+    'boot-sitnwejy.c2.kafka-serverless.ap-northeast-1.amazonaws.com:9098'
 ]
