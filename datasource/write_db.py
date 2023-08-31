@@ -6,7 +6,7 @@ import setting
 from mysql import get_conn
 from mock import gen, DataType
 
-focus_database = 'demo'
+focus_database = setting.DB
 conn = get_conn(focus_database)
 
 order_schema = {
@@ -19,13 +19,13 @@ order_schema = {
     "update_time": (DataType.DATETIME,)
 }
 
-creator = gen(columns=order_schema, increment_id="sub_id",
-              interval_min=1000, interval_max=2000)
+creator = gen(columns=order_schema,
+              interval_min=100, interval_max=1000)
 
 for item in creator:
     print(item)
     try:
-        command = Insert("`{0}`".format("order_ex"))
+        command = Insert("`{0}`".format("order"))
         for key in item:
             command.put(key, item[key])
 
@@ -37,6 +37,6 @@ for item in creator:
 
     except Exception as e:
         print(e)
-        time.sleep(60)
-        conn.close()
-        conn = get_conn()
+        # time.sleep(60)
+        # conn.close()
+        # conn = get_conn()

@@ -4,7 +4,7 @@ ip
 ```
 1. 启动mysql 以及 maxwell [在另外一个项目]
 ```
-mysql -h demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn -P 3306 -u admin -p
+mysql -h database-2.cluster-cqshokmqgqfv.ap-northeast-1.rds.amazonaws.com -P 3306 -u demo -p
 
 docker run -it --rm zendesk/maxwell bin/maxwell --user=admin \
     --password=Demo1234 --host=demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn --producer=kafka \

@@ -3,7 +3,7 @@
 ## 准备工作
 4. 创建数据表
 ```
-mysql -h demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn -P 3306 -u admin -p
+mysql -h database-1.cqshokmqgqfv.ap-northeast-1.rds.amazonaws.com -P 3306 -u demo -p
 
 create database demo;
 

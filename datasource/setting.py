@@ -1,14 +1,14 @@
 # mysql
-HOST = 'demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn'
+HOST = 'database-1.cqshokmqgqfv.ap-northeast-1.rds.amazonaws.com'
 PORT = 3306
-USER = 'admin'
+USER = 'demo'
 PWD = 'Demo1234'
-DB = 'demo'
+DB = 'dev'
 Focus_TB = 'order'
 
 # kafka
 BootStrap_Servers = [
-    'b-3.demo-cluster-1.9z77lu.c4.kafka.cn-northwest-1.amazonaws.com.cn:9092',
-    'b-1.demo-cluster-1.9z77lu.c4.kafka.cn-northwest-1.amazonaws.com.cn:9092',
-    'b-2.demo-cluster-1.9z77lu.c4.kafka.cn-northwest-1.amazonaws.com.cn:9092'
+    "b-1.demo.bkqn0x.c3.kafka.ap-northeast-1.amazonaws.com:9098",
+    "b-3.demo.bkqn0x.c3.kafka.ap-northeast-1.amazonaws.com:9098",
+    "b-2.demo.bkqn0x.c3.kafka.ap-northeast-1.amazonaws.com:9098"
 ]
