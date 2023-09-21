@@ -3,3 +3,4 @@ PyMySQL
 pysqler
 boto3
 kafka-python
+confluent_kafka

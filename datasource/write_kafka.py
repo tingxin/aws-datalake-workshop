@@ -14,7 +14,7 @@ behaviour_schema = {
 }
 
 creator = gen(columns=behaviour_schema, increment_id="resource_id",
-              interval_min=100, interval_max=300)
+              interval_min=500, interval_max=3000)
 
 
 def send_success(self, *args, **kwargs):
@@ -30,7 +30,7 @@ def send_error(self, *args, **kwargs):
 
 
 def start_producer(topic):
-    producer = KafkaProducer(bootstrap_servers=BootStrap_Servers,security_protocol="SSL")
+    producer = KafkaProducer(bootstrap_servers=BootStrap_Servers)
     for item in creator:
         doc = json.dumps(item).encode('utf-8')
         producer.send(topic, doc).add_callback(
