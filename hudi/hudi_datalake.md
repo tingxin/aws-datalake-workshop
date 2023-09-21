@@ -27,6 +27,31 @@ set 'parallelism.default' = '1';
 ```
 
 4. 创建kafka table
+CREATE TABLE `order_event` (
+    order_id INT,
+    goods_id INT,
+    user_mail STRING,
+    status STRING, 
+    good_count BIGINT,
+    amount DECIMAL(10, 2),
+    create_time STRING,
+    update_time TIMESTAMP(3),
+    proc_time AS PROCTIME(),                  -- 定义处理时间
+    WATERMARK FOR update_time AS update_time, -- 定义事件时间
+    PRIMARY KEY (`order_id`) NOT ENFORCED
+) WITH (
+    'connector' = 'mysql-cdc',      -- 可选 'mysql-cdc' 和 'postgres-cdc'
+    'hostname' = 'demo.c6lwjjfhbm6a.rds.cn-northwest-1.amazonaws.com.cn',  
+                                  -- 数据库的 IP
+    'port' = '3306',              -- 数据库的访问端口
+    'username' = 'admin',         -- 数据库访问的用户名（需要提供 SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT, SELECT, RELOAD 权限）
+    'password' = 'Demo1234',      -- 数据库访问的密码
+    'database-name' = 'demo',     -- 需要同步的数据库
+    'table-name' = 'order'        -- 需要同步的数据表名
+);
+
+
+
 ```
 CREATE TABLE kafka_order (
   order_id BIGINT,
